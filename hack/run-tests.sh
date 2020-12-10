@@ -34,7 +34,7 @@ if [ -f ${CSV_FILE} ]; then
 fi
 
 # Check the webhook, to see if it allow updating of the HyperConverged CR
-INFRA_JSON='{spec":{"infra":{"nodePlacement":{"tolerations":[{"effect":"NoSchedule","key":"key","operator":"Equal","value":"value"}]}}}}'
+INFRA_JSON='{"spec":{"infra":{"nodePlacement":{"tolerations":[{"effect":"NoSchedule","key":"key","operator":"Equal","value":"value"}]}}}}'
 ./hack/retry.sh  3 15 "${KUBECTL_BINARY} patch hco -n kubevirt-hyperconverged kubevirt-hyperconverged -p '${INFRA_JSON}' --type=merge"
 WORKLOADS_JSON='{"spec":{"workloads":{"nodePlacement":{"tolerations":[{"effect":"NoSchedule","key":"key","operator":"Equal","value":"value"}]}}}}'
 ./hack/retry.sh  3 15 "${KUBECTL_BINARY} patch hco -n kubevirt-hyperconverged kubevirt-hyperconverged -p '${WORKLOADS_JSON}' --type=merge"
